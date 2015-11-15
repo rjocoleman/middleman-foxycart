@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/rjocoleman/middleman-foxycart'
   s.summary     = %q{FoxyCart helpers for Middleman static sites}
   s.description = %q{FoxyCart helpers for Middleman static sites}
+  s.license     = 'MIT'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
