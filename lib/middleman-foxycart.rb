@@ -1,38 +1,43 @@
-# Require core library
 require 'middleman-core'
 
-# Extension namespace
-class MyExtension < ::Middleman::Extension
-  option :my_option, 'default', 'An example option'
+class Foxycart < ::Middleman::Extension
+  option :api_key,  ENV['FOXYCART_API_KEY'], 'FoxyCart API key'
+  option :url, ENV['FOXYCART_URL'], 'FoxyCart domain'
+  option :auto_encode_hrefs, true, 'Automatically encode HREFs with product validation hashes?'
 
   def initialize(app, options_hash={}, &block)
-    # Call super to build options from the options_hash
     super
 
-    # Require libraries only when activated
-    # require 'necessary/library'
+    require 'foxycart_helpers'
 
-    # set up your extension
-    # puts options.my_option
+    FoxycartHelpers.configure do |config|
+      config.api_key =  options.api_key
+      config.url = options.url
+      config.auto_encode_hrefs = options.auto_encode_hrefs
+    end
   end
 
-  def after_configuration
-    # Do something
+  helpers do
+    def foxycart_encode(code, name, value)
+      FoxycartHelpers::ProductVerification.encode code, name, value
+    end
+
+    def foxycart_encoded_name(code, name, value)
+      FoxycartHelpers::ProductVerification.encoded_name code, name, value
+    end
+
+    def foxycart_url_for(name, price, code=nil, opts={})
+      FoxycartHelpers::Link.href name, price, code, opts
+    end
+
+    def foxycart_loader_js_url
+      FoxycartHelpers::Javascript.url
+    end
+
+    def foxycart_loader_js
+      FoxycartHelpers::Javascript.html_element
+    end
   end
-
-  # A Sitemap Manipulator
-  # def manipulate_resource_list(resources)
-  # end
-
-  # module do
-  #   def a_helper
-  #   end
-  # end
 end
 
-# Register extensions which can be activated
-# Make sure we have the version of Middleman we expect
-# Name param may be omited, it will default to underscored
-# version of class name
-
-# MyExtension.register(:my_extension)
+Foxycart.register(:foxycart)

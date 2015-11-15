@@ -3,11 +3,11 @@ $:.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'middleman-foxycart'
-  s.version     = '0.0.1'
+  s.version     = '0.1.0'
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ['Your Name']
+  s.authors     = ['Robert Coleman']
   s.email       = ['github@robert.net.nz']
-  s.homepage    = "https://github.com/rjocoleman/middleman-foxycart"
+  s.homepage    = 'https://github.com/rjocoleman/middleman-foxycart'
   s.summary     = %q{FoxyCart helpers for Middleman static sites}
   s.description = %q{FoxyCart helpers for Middleman static sites}
 
